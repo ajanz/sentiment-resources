@@ -1,10 +1,14 @@
 #!/bin/bash
 
-echo "plWN(synonymy) - NTUMC"
-python evaluate/eval_annotations.py data/plwn/out/synonymy.txt data/ntumc/ntumc.cats
+echo "MWNOp - plWN"
+python evaluate/eval_scores.py data/mwnop/mwnop.scores data/plwn/plwn.synonymy.scores
 
-echo "plWN(hyponymy) - NTUMC"
-python evaluate/eval_annotations.py data/plwn/out/hyponymy.txt data/ntumc/ntumc.cats
+echo "MWNOp - NTUMC"
+python evaluate/eval_scores.py data/mwnop/mwnop.scores data/ntumc/ntumc.scores
 
-echo "plWN(hypernymy) - NTUMC"
-python evaluate/eval_annotations.py data/plwn/out/hypernymy.txt data/ntumc/ntumc.cats
+echo "MWNOp - SentiWN"
+python evaluate/eval_scores.py data/mwnop/mwnop.scores data/sentiwn/sentiwn.scores
+
+# joint lexicon of plWN & NTUMC
+echo "MWNOp - plWN & NTUMC"
+python evaluate/eval_scores.py data/mwnop/mwnop.scores <(python scripts/join_scores.py data/plwn/plwn.synonymy.scores data/ntumc/ntumc.scores)
